@@ -29,7 +29,7 @@
       "InputPath": "$",
       "Result": {
         "subject": "Error has occured during running lambda: Register Metrics",
-        "to_addr": "shikano.takeki@nexon.co.jp",
+        "to_addr": "xxx@co.jp",
         "body": "following error has occured\r\n",
         "status_code": 401
       },
