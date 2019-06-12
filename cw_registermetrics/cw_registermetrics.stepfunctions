@@ -1,0 +1,46 @@
+{
+  "Comment": "Register CloudWatch EBS metrics to the specified dashboard",
+  "StartAt": "Set Dashboard info",
+  "States": {
+    "Set Dashboard info": {
+      "Type": "Pass",
+      "InputPath": "$",
+      "Result": {
+        "dboard_name": "Test"
+      },
+      "ResultPath": "$.params",
+      "Next": "Register Metrics"
+    },
+    "Register Metrics": {
+      "Type": "Task",
+      "Resource": "",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.TaskFailed"],
+          "ResultPath": "$.Error",
+          "Next": "Configure Errormail components"
+        }
+      ],
+      "ResultPath": "$",
+      "End": true
+    },
+    "Configure Errormail components": {
+      "Type": "Pass",
+      "InputPath": "$",
+      "Result": {
+        "subject": "Error has occured during running lambda: Register Metrics",
+        "to_addr": "shikano.takeki@nexon.co.jp",
+        "body": "following error has occured\r\n",
+        "status_code": 401
+      },
+      "ResultPath": "$.Result",
+      "Next": "Send Mail"
+    },
+    "Send Mail": {
+      "Type": "Task",
+      "InputPath": "$",
+      "Resource": "",
+      "End": true
+    }
+  }
+}
